@@ -11,7 +11,8 @@ Elm.Baobab.make = function (_elm) {
    _L = _N.List.make(_elm),
    _P = _N.Ports.make(_elm),
    $moduleName = "Baobab",
-   $Basics = Elm.Basics.make(_elm);
+   $Basics = Elm.Basics.make(_elm),
+   $Graphics$Collage = Elm.Graphics.Collage.make(_elm);
    var thirdPoint = F3(function (_v0,
    h,
    alpha) {
@@ -27,11 +28,54 @@ Elm.Baobab.make = function (_elm) {
                         ,_1: _v0._1 + a * sinAlpha};
               }();}
          _U.badCase($moduleName,
-         "between lines 6 and 9");
+         "between lines 7 and 10");
+      }();
+   });
+   var squareAndTriangle = F3(function (_v4,
+   h,
+   alpha) {
+      return function () {
+         switch (_v4.ctor)
+         {case "_Tuple2":
+            return function () {
+                 var $ = A3(thirdPoint,
+                 {ctor: "_Tuple2"
+                 ,_0: _v4._0
+                 ,_1: _v4._1 + h},
+                 h,
+                 alpha),
+                 x4 = $._0,
+                 y4 = $._1;
+                 return _L.fromArray([{ctor: "_Tuple2"
+                                      ,_0: _v4._0
+                                      ,_1: _v4._1}
+                                     ,{ctor: "_Tuple2"
+                                      ,_0: _v4._0 + h
+                                      ,_1: _v4._1}
+                                     ,{ctor: "_Tuple2"
+                                      ,_0: _v4._0 + h
+                                      ,_1: _v4._1 + h}
+                                     ,{ctor: "_Tuple2",_0: x4,_1: y4}
+                                     ,{ctor: "_Tuple2"
+                                      ,_0: _v4._0
+                                      ,_1: _v4._1 + h}
+                                     ,{ctor: "_Tuple2"
+                                      ,_0: _v4._0 + h
+                                      ,_1: _v4._1 + h}
+                                     ,{ctor: "_Tuple2"
+                                      ,_0: _v4._0
+                                      ,_1: _v4._1 + h}
+                                     ,{ctor: "_Tuple2"
+                                      ,_0: _v4._0
+                                      ,_1: _v4._1}]);
+              }();}
+         _U.badCase($moduleName,
+         "between lines 15 and 17");
       }();
    });
    _elm.Baobab.values = {_op: _op
-                        ,thirdPoint: thirdPoint};
+                        ,thirdPoint: thirdPoint
+                        ,squareAndTriangle: squareAndTriangle};
    return _elm.Baobab.values;
 };
 Elm.Basics = Elm.Basics || {};
@@ -1819,71 +1863,19 @@ Elm.Main.make = function (_elm) {
    $Color = Elm.Color.make(_elm),
    $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
    $Graphics$Element = Elm.Graphics.Element.make(_elm);
-   var triangle = F3(function (_v0,
-   h,
-   a) {
-      return function () {
-         switch (_v0.ctor)
-         {case "_Tuple2":
-            return function () {
-                 var $ = {ctor: "_Tuple2"
-                         ,_0: _v0._0 + h
-                         ,_1: _v0._1},
-                 x1 = $._0,
-                 y1 = $._1;
-                 var $ = A3($Baobab.thirdPoint,
-                 {ctor: "_Tuple2"
-                 ,_0: _v0._0
-                 ,_1: _v0._1},
-                 h,
-                 a),
-                 x2 = $._0,
-                 y2 = $._1;
-                 return A2($Graphics$Collage.traced,
-                 $Graphics$Collage.solid($Color.red),
-                 $Graphics$Collage.path(_L.fromArray([{ctor: "_Tuple2"
-                                                      ,_0: _v0._0
-                                                      ,_1: _v0._1}
-                                                     ,{ctor: "_Tuple2"
-                                                      ,_0: x1
-                                                      ,_1: y1}
-                                                     ,{ctor: "_Tuple2"
-                                                      ,_0: x2
-                                                      ,_1: y2}
-                                                     ,{ctor: "_Tuple2"
-                                                      ,_0: _v0._0
-                                                      ,_1: _v0._1}])));
-              }();}
-         _U.badCase($moduleName,
-         "between lines 16 and 19");
-      }();
-   });
    var main = A3($Graphics$Collage.collage,
-   300,
-   300,
-   _L.fromArray([A3(triangle,
+   500,
+   500,
+   _L.fromArray([$Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.squareAndTriangle,
                 {ctor: "_Tuple2",_0: 0,_1: 0},
-                100,
-                $Basics.degrees(15))
-                ,A3(triangle,
+                100)($Basics.degrees(15)))
+                ,$Graphics$Collage.move({ctor: "_Tuple2"
+                                        ,_0: 0
+                                        ,_1: 100})($Graphics$Collage.rotate($Basics.degrees(15))($Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.squareAndTriangle,
                 {ctor: "_Tuple2",_0: 0,_1: 0},
-                100,
-                $Basics.degrees(30))
-                ,A3(triangle,
-                {ctor: "_Tuple2",_0: 0,_1: 0},
-                100,
-                $Basics.degrees(45))
-                ,A3(triangle,
-                {ctor: "_Tuple2",_0: 0,_1: 0},
-                100,
-                $Basics.degrees(60))
-                ,A3(triangle,
-                {ctor: "_Tuple2",_0: 0,_1: 0},
-                100,
-                $Basics.degrees(75))]));
+                100 * $Basics.cos($Basics.degrees(15)))($Basics.degrees(60)))))]));
    _elm.Main.values = {_op: _op
-                      ,main: main
-                      ,triangle: triangle};
+                      ,main: main};
    return _elm.Main.values;
 };
 Elm.Maybe = Elm.Maybe || {};
