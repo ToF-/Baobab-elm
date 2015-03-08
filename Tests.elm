@@ -20,10 +20,9 @@ tests = suite "Baobab function"
                 (assertEqual [(0,0),(10,0),(10,10),(5,15),(0,10),(10,10),(0,10),(0,0)]
                   (List.map roundCoord (squareAndTriangle (0,0) 10 (degrees 45))))
             ]
-        ,suite "baobab"
-            [test "should produce a collection of paths"
-                (let seed = initialSeed 0
-                in (assertEqual ([],seed) (baobab 1 (0,0) 100 seed)))]
+        ,suite "rotate" 
+            [test "should rotate a path around a point" 
+                (assertEqual [(0,0),(1,1)] (List.map roundCoord (rotate (0,0) (degrees 45) [(0,0),(1,0)])))]
         ]
 
 main = runDisplay tests
