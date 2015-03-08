@@ -12,7 +12,8 @@ Elm.Baobab.make = function (_elm) {
    _P = _N.Ports.make(_elm),
    $moduleName = "Baobab",
    $Basics = Elm.Basics.make(_elm),
-   $Graphics$Collage = Elm.Graphics.Collage.make(_elm);
+   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
+   $Random = Elm.Random.make(_elm);
    var thirdPoint = F3(function (_v0,
    h,
    alpha) {
@@ -28,7 +29,7 @@ Elm.Baobab.make = function (_elm) {
                         ,_1: _v0._1 + a * sinAlpha};
               }();}
          _U.badCase($moduleName,
-         "between lines 7 and 10");
+         "between lines 8 and 11");
       }();
    });
    var squareAndTriangle = F3(function (_v4,
@@ -70,12 +71,41 @@ Elm.Baobab.make = function (_elm) {
                                       ,_1: _v4._1}]);
               }();}
          _U.badCase($moduleName,
-         "between lines 15 and 17");
+         "between lines 16 and 18");
+      }();
+   });
+   var baobab = F4(function (n,
+   _v8,
+   h,
+   seed) {
+      return function () {
+         switch (_v8.ctor)
+         {case "_Tuple2":
+            return function () {
+                 var $ = A2($Random.generate,
+                 A2($Random.$float,0,9),
+                 seed),
+                 r = $._0,
+                 newSeed = $._1;
+                 var alpha = $Basics.degrees(40.0 + r);
+                 var p = A3(squareAndTriangle,
+                 {ctor: "_Tuple2"
+                 ,_0: _v8._0
+                 ,_1: _v8._1},
+                 h,
+                 alpha);
+                 return {ctor: "_Tuple2"
+                        ,_0: _L.fromArray([p])
+                        ,_1: newSeed};
+              }();}
+         _U.badCase($moduleName,
+         "between lines 22 and 26");
       }();
    });
    _elm.Baobab.values = {_op: _op
                         ,thirdPoint: thirdPoint
-                        ,squareAndTriangle: squareAndTriangle};
+                        ,squareAndTriangle: squareAndTriangle
+                        ,baobab: baobab};
    return _elm.Baobab.values;
 };
 Elm.Basics = Elm.Basics || {};
@@ -256,6 +286,44 @@ Elm.Basics.make = function (_elm) {
                         ,EQ: EQ
                         ,GT: GT};
    return _elm.Basics.values;
+};
+Elm.Char = Elm.Char || {};
+Elm.Char.make = function (_elm) {
+   "use strict";
+   _elm.Char = _elm.Char || {};
+   if (_elm.Char.values)
+   return _elm.Char.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _P = _N.Ports.make(_elm),
+   $moduleName = "Char",
+   $Native$Char = Elm.Native.Char.make(_elm);
+   var fromCode = $Native$Char.fromCode;
+   var toCode = $Native$Char.toCode;
+   var toLocaleLower = $Native$Char.toLocaleLower;
+   var toLocaleUpper = $Native$Char.toLocaleUpper;
+   var toLower = $Native$Char.toLower;
+   var toUpper = $Native$Char.toUpper;
+   var isHexDigit = $Native$Char.isHexDigit;
+   var isOctDigit = $Native$Char.isOctDigit;
+   var isDigit = $Native$Char.isDigit;
+   var isLower = $Native$Char.isLower;
+   var isUpper = $Native$Char.isUpper;
+   _elm.Char.values = {_op: _op
+                      ,isUpper: isUpper
+                      ,isLower: isLower
+                      ,isDigit: isDigit
+                      ,isOctDigit: isOctDigit
+                      ,isHexDigit: isHexDigit
+                      ,toUpper: toUpper
+                      ,toLower: toLower
+                      ,toLocaleUpper: toLocaleUpper
+                      ,toLocaleLower: toLocaleLower
+                      ,toCode: toCode
+                      ,fromCode: fromCode};
+   return _elm.Char.values;
 };
 Elm.Color = Elm.Color || {};
 Elm.Color.make = function (_elm) {
@@ -715,6 +783,695 @@ Elm.Color.make = function (_elm) {
                        ,charcoal: charcoal
                        ,darkCharcoal: darkCharcoal};
    return _elm.Color.values;
+};
+Elm.ElmTest = Elm.ElmTest || {};
+Elm.ElmTest.Assertion = Elm.ElmTest.Assertion || {};
+Elm.ElmTest.Assertion.make = function (_elm) {
+   "use strict";
+   _elm.ElmTest = _elm.ElmTest || {};
+   _elm.ElmTest.Assertion = _elm.ElmTest.Assertion || {};
+   if (_elm.ElmTest.Assertion.values)
+   return _elm.ElmTest.Assertion.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _P = _N.Ports.make(_elm),
+   $moduleName = "ElmTest.Assertion",
+   $Basics = Elm.Basics.make(_elm),
+   $List = Elm.List.make(_elm);
+   var AssertNotEqual = F3(function (a,
+   b,
+   c) {
+      return {ctor: "AssertNotEqual"
+             ,_0: a
+             ,_1: b
+             ,_2: c};
+   });
+   var assertNotEqual = F2(function (a,
+   b) {
+      return A3(AssertNotEqual,
+      function (_v0) {
+         return function () {
+            return !_U.eq(a,b);
+         }();
+      },
+      $Basics.toString(a),
+      $Basics.toString(b));
+   });
+   var AssertEqual = F3(function (a,
+   b,
+   c) {
+      return {ctor: "AssertEqual"
+             ,_0: a
+             ,_1: b
+             ,_2: c};
+   });
+   var assertEqual = F2(function (a,
+   b) {
+      return A3(AssertEqual,
+      function (_v2) {
+         return function () {
+            return _U.eq(a,b);
+         }();
+      },
+      $Basics.toString(a),
+      $Basics.toString(b));
+   });
+   var assertionList = F2(function (xs,
+   ys) {
+      return A3($List.map2,
+      assertEqual,
+      xs,
+      ys);
+   });
+   var AssertFalse = function (a) {
+      return {ctor: "AssertFalse"
+             ,_0: a};
+   };
+   var AssertTrue = function (a) {
+      return {ctor: "AssertTrue"
+             ,_0: a};
+   };
+   var assertT = AssertTrue;
+   var assert = function (b) {
+      return AssertTrue(function (_v4) {
+         return function () {
+            return b;
+         }();
+      });
+   };
+   _elm.ElmTest.Assertion.values = {_op: _op
+                                   ,AssertTrue: AssertTrue
+                                   ,AssertFalse: AssertFalse
+                                   ,AssertEqual: AssertEqual
+                                   ,AssertNotEqual: AssertNotEqual
+                                   ,assertT: assertT
+                                   ,assert: assert
+                                   ,assertEqual: assertEqual
+                                   ,assertionList: assertionList
+                                   ,assertNotEqual: assertNotEqual};
+   return _elm.ElmTest.Assertion.values;
+};
+Elm.ElmTest = Elm.ElmTest || {};
+Elm.ElmTest.Run = Elm.ElmTest.Run || {};
+Elm.ElmTest.Run.make = function (_elm) {
+   "use strict";
+   _elm.ElmTest = _elm.ElmTest || {};
+   _elm.ElmTest.Run = _elm.ElmTest.Run || {};
+   if (_elm.ElmTest.Run.values)
+   return _elm.ElmTest.Run.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _P = _N.Ports.make(_elm),
+   $moduleName = "ElmTest.Run",
+   $Basics = Elm.Basics.make(_elm),
+   $ElmTest$Assertion = Elm.ElmTest.Assertion.make(_elm),
+   $ElmTest$Test = Elm.ElmTest.Test.make(_elm),
+   $List = Elm.List.make(_elm);
+   var failedSuites = function (result) {
+      return function () {
+         switch (result.ctor)
+         {case "Report":
+            return function () {
+                 var failed = _U.cmp($List.length(result._1.failures),
+                 0) > 0 ? 1 : 0;
+                 return failed + $List.sum($List.map(failedSuites)(result._1.results));
+              }();}
+         return 0;
+      }();
+   };
+   var passedSuites = function (result) {
+      return function () {
+         switch (result.ctor)
+         {case "Report":
+            return function () {
+                 var passed = _U.eq($List.length(result._1.failures),
+                 0) ? 1 : 0;
+                 return passed + $List.sum($List.map(passedSuites)(result._1.results));
+              }();}
+         return 0;
+      }();
+   };
+   var failedTests = function (result) {
+      return function () {
+         switch (result.ctor)
+         {case "Fail": return 1;
+            case "Pass": return 0;
+            case "Report":
+            return $List.sum($List.map(failedTests)(result._1.results));}
+         _U.badCase($moduleName,
+         "between lines 59 and 62");
+      }();
+   };
+   var passedTests = function (result) {
+      return function () {
+         switch (result.ctor)
+         {case "Fail": return 0;
+            case "Pass": return 1;
+            case "Report":
+            return $List.sum($List.map(passedTests)(result._1.results));}
+         _U.badCase($moduleName,
+         "between lines 53 and 56");
+      }();
+   };
+   var pass = function (m) {
+      return function () {
+         switch (m.ctor)
+         {case "Fail": return false;
+            case "Pass": return true;
+            case "Report":
+            return _U.cmp($List.length(function (_) {
+                 return _.failures;
+              }(m._1)),
+              0) > 0 ? false : true;}
+         _U.badCase($moduleName,
+         "between lines 43 and 48");
+      }();
+   };
+   var fail = function ($) {
+      return $Basics.not(pass($));
+   };
+   var Report = F2(function (a,b) {
+      return {ctor: "Report"
+             ,_0: a
+             ,_1: b};
+   });
+   var Fail = F2(function (a,b) {
+      return {ctor: "Fail"
+             ,_0: a
+             ,_1: b};
+   });
+   var Pass = function (a) {
+      return {ctor: "Pass",_0: a};
+   };
+   var run = function (test) {
+      return function () {
+         switch (test.ctor)
+         {case "Suite":
+            return function () {
+                 var results = A2($List.map,
+                 run,
+                 test._1);
+                 var $ = A2($List.partition,
+                 pass,
+                 results),
+                 passes = $._0,
+                 fails = $._1;
+                 return A2(Report,
+                 test._0,
+                 {_: {}
+                 ,failures: fails
+                 ,passes: passes
+                 ,results: results});
+              }();
+            case "TestCase":
+            return function () {
+                 var runAssertion = F2(function (t,
+                 m) {
+                    return t({ctor: "_Tuple0"}) ? Pass(test._0) : A2(Fail,
+                    test._0,
+                    m);
+                 });
+                 return function () {
+                    switch (test._1.ctor)
+                    {case "AssertEqual":
+                       return runAssertion(test._1._0)(A2($Basics._op["++"],
+                         "Expected: ",
+                         A2($Basics._op["++"],
+                         test._1._1,
+                         A2($Basics._op["++"],
+                         "; got: ",
+                         test._1._2))));
+                       case "AssertFalse":
+                       return runAssertion(test._1._0)("not False");
+                       case "AssertNotEqual":
+                       return runAssertion(test._1._0)(A2($Basics._op["++"],
+                         test._1._1,
+                         A2($Basics._op["++"],
+                         " equals ",
+                         test._1._2)));
+                       case "AssertTrue":
+                       return runAssertion(test._1._0)("not True");}
+                    _U.badCase($moduleName,
+                    "between lines 29 and 34");
+                 }();
+              }();}
+         _U.badCase($moduleName,
+         "between lines 25 and 41");
+      }();
+   };
+   _elm.ElmTest.Run.values = {_op: _op
+                             ,Pass: Pass
+                             ,Fail: Fail
+                             ,Report: Report
+                             ,run: run
+                             ,pass: pass
+                             ,fail: fail
+                             ,passedTests: passedTests
+                             ,failedTests: failedTests
+                             ,passedSuites: passedSuites
+                             ,failedSuites: failedSuites};
+   return _elm.ElmTest.Run.values;
+};
+Elm.ElmTest = Elm.ElmTest || {};
+Elm.ElmTest.Runner = Elm.ElmTest.Runner || {};
+Elm.ElmTest.Runner.Element = Elm.ElmTest.Runner.Element || {};
+Elm.ElmTest.Runner.Element.make = function (_elm) {
+   "use strict";
+   _elm.ElmTest = _elm.ElmTest || {};
+   _elm.ElmTest.Runner = _elm.ElmTest.Runner || {};
+   _elm.ElmTest.Runner.Element = _elm.ElmTest.Runner.Element || {};
+   if (_elm.ElmTest.Runner.Element.values)
+   return _elm.ElmTest.Runner.Element.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _P = _N.Ports.make(_elm),
+   $moduleName = "ElmTest.Runner.Element",
+   $Basics = Elm.Basics.make(_elm),
+   $Color = Elm.Color.make(_elm),
+   $ElmTest$Run = Elm.ElmTest.Run.make(_elm),
+   $ElmTest$Runner$String = Elm.ElmTest.Runner.String.make(_elm),
+   $ElmTest$Test = Elm.ElmTest.Test.make(_elm),
+   $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $List = Elm.List.make(_elm),
+   $String = Elm.String.make(_elm),
+   $Text = Elm.Text.make(_elm);
+   var maxOrZero = function (l) {
+      return A3($List.foldl,
+      $Basics.max,
+      0,
+      l);
+   };
+   var indent = function (s) {
+      return function () {
+         var trimmed = $String.trimLeft(s);
+         return $String.length(s) - $String.length(trimmed);
+      }();
+   };
+   var plainText = function (s) {
+      return $Text.leftAligned($Text.fromString(s));
+   };
+   var pretty = function (_v0) {
+      return function () {
+         switch (_v0.ctor)
+         {case "_Tuple2":
+            return function () {
+                 var w$ = 5;
+                 var w = indent(_v0._0) * 10;
+                 return function () {
+                    switch (_v0._1.ctor)
+                    {case "Fail":
+                       return $Graphics$Element.color($Color.red)(A2($Graphics$Element.flow,
+                         $Graphics$Element.right,
+                         _L.fromArray([A2($Graphics$Element.spacer,
+                                      w,
+                                      1)
+                                      ,plainText(_v0._0)
+                                      ,A2($Graphics$Element.spacer,
+                                      w$,
+                                      1)])));
+                       case "Pass":
+                       return $Graphics$Element.color($Color.green)(A2($Graphics$Element.flow,
+                         $Graphics$Element.right,
+                         _L.fromArray([A2($Graphics$Element.spacer,
+                                      w,
+                                      1)
+                                      ,plainText(_v0._0)
+                                      ,A2($Graphics$Element.spacer,
+                                      w$,
+                                      1)])));
+                       case "Report":
+                       return function () {
+                            var c = _U.cmp($ElmTest$Run.failedTests(_v0._1),
+                            0) > 0 ? $Color.red : $Color.green;
+                            return $Graphics$Element.color(c)(A2($Graphics$Element.flow,
+                            $Graphics$Element.right,
+                            _L.fromArray([A2($Graphics$Element.spacer,
+                                         w,
+                                         1)
+                                         ,$Text.leftAligned($Text.bold($Text.fromString(_v0._0)))
+                                         ,A2($Graphics$Element.spacer,
+                                         w$,
+                                         1)])));
+                         }();}
+                    _U.badCase($moduleName,
+                    "between lines 29 and 33");
+                 }();
+              }();}
+         _U.badCase($moduleName,
+         "between lines 27 and 33");
+      }();
+   };
+   var runDisplay = function (tests) {
+      return function () {
+         var _ = $ElmTest$Runner$String.run(tests);
+         var allPassed = function () {
+            switch (_.ctor)
+            {case "::": switch (_._0.ctor)
+                 {case "_Tuple2":
+                    return _._0._1;}
+                 break;}
+            _U.badCase($moduleName,
+            "on line 45, column 45 to 61");
+         }();
+         var results = function () {
+            switch (_.ctor)
+            {case "::": switch (_._0.ctor)
+                 {case "_Tuple2": return _._1;}
+                 break;}
+            _U.badCase($moduleName,
+            "on line 45, column 45 to 61");
+         }();
+         var summary = function () {
+            switch (_.ctor)
+            {case "::": switch (_._0.ctor)
+                 {case "_Tuple2":
+                    return _._0._0;}
+                 break;}
+            _U.badCase($moduleName,
+            "on line 45, column 45 to 61");
+         }();
+         var results$ = A2($List.map,
+         pretty,
+         results);
+         var maxWidth = maxOrZero($List.map($Graphics$Element.widthOf)(results$));
+         var maxHeight = maxOrZero($List.map($Graphics$Element.heightOf)(results$));
+         var elements = _U.eq(results,
+         _L.fromArray([{ctor: "_Tuple2"
+                       ,_0: ""
+                       ,_1: allPassed}])) ? _L.fromArray([]) : A2($List.map,
+         function ($) {
+            return $Graphics$Element.color($Color.black)(A3($Graphics$Element.container,
+            maxWidth + 2,
+            maxHeight + 2,
+            $Graphics$Element.midLeft)($Graphics$Element.width(maxWidth)($)));
+         },
+         results$);
+         return $Graphics$Element.flow($Graphics$Element.down)(A2($List._op["::"],
+         plainText(summary),
+         A2($List._op["::"],
+         A2($Graphics$Element.spacer,
+         1,
+         10),
+         elements)));
+      }();
+   };
+   _elm.ElmTest.Runner.Element.values = {_op: _op
+                                        ,runDisplay: runDisplay};
+   return _elm.ElmTest.Runner.Element.values;
+};
+Elm.ElmTest = Elm.ElmTest || {};
+Elm.ElmTest.Runner = Elm.ElmTest.Runner || {};
+Elm.ElmTest.Runner.String = Elm.ElmTest.Runner.String || {};
+Elm.ElmTest.Runner.String.make = function (_elm) {
+   "use strict";
+   _elm.ElmTest = _elm.ElmTest || {};
+   _elm.ElmTest.Runner = _elm.ElmTest.Runner || {};
+   _elm.ElmTest.Runner.String = _elm.ElmTest.Runner.String || {};
+   if (_elm.ElmTest.Runner.String.values)
+   return _elm.ElmTest.Runner.String.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _P = _N.Ports.make(_elm),
+   $moduleName = "ElmTest.Runner.String",
+   $Basics = Elm.Basics.make(_elm),
+   $ElmTest$Run = Elm.ElmTest.Run.make(_elm),
+   $ElmTest$Test = Elm.ElmTest.Test.make(_elm),
+   $List = Elm.List.make(_elm),
+   $String = Elm.String.make(_elm);
+   var replicate = F2(function (n,
+   c) {
+      return function () {
+         var go = function (n) {
+            return _U.cmp(n,
+            0) < 1 ? _L.fromArray([]) : A2($List._op["::"],
+            c,
+            go(n - 1));
+         };
+         return $String.fromList(go(n));
+      }();
+   });
+   var vcat = function ($) {
+      return $String.concat($List.intersperse("\n")($));
+   };
+   var indent = function (n) {
+      return function () {
+         var indents = A2(replicate,
+         n,
+         _U.chr(" "));
+         return function ($) {
+            return vcat($List.map($String.append(indents))($String.lines($)));
+         };
+      }();
+   };
+   var pretty = F2(function (n,
+   result) {
+      return function () {
+         var passed = $ElmTest$Run.pass(result);
+         return function () {
+            switch (result.ctor)
+            {case "Fail":
+               return _L.fromArray([{ctor: "_Tuple2"
+                                    ,_0: indent(n)(A2($Basics._op["++"],
+                                    result._0,
+                                    A2($Basics._op["++"],
+                                    ": FAILED. ",
+                                    result._1)))
+                                    ,_1: result}]);
+               case "Pass":
+               return _L.fromArray([{ctor: "_Tuple2"
+                                    ,_0: indent(n)(A2($Basics._op["++"],
+                                    result._0,
+                                    ": passed."))
+                                    ,_1: result}]);
+               case "Report":
+               return function () {
+                    var allPassed = _U.eq($ElmTest$Run.failedTests(result),
+                    0);
+                    var subResults = allPassed ? _L.fromArray([]) : A2($List.concatMap,
+                    pretty(n + 2),
+                    result._1.results);
+                    var msg = A2($Basics._op["++"],
+                    "Test Suite: ",
+                    A2($Basics._op["++"],
+                    result._0,
+                    A2($Basics._op["++"],
+                    ": ",
+                    passed ? "all tests passed" : "FAILED")));
+                    return A2($List._op["::"],
+                    {ctor: "_Tuple2"
+                    ,_0: A2(indent,n,msg)
+                    ,_1: result},
+                    subResults);
+                 }();}
+            _U.badCase($moduleName,
+            "between lines 34 and 43");
+         }();
+      }();
+   });
+   var run = function (t) {
+      return function () {
+         var tests = function () {
+            switch (t.ctor)
+            {case "Suite": return t._1;
+               case "TestCase":
+               return _L.fromArray([A2($ElmTest$Test.TestCase,
+                 t._0,
+                 t._1)]);}
+            _U.badCase($moduleName,
+            "between lines 48 and 51");
+         }();
+         var result = $ElmTest$Run.run(t);
+         var passedTests$ = $ElmTest$Run.passedTests(result);
+         var passedSuites$ = $ElmTest$Run.passedSuites(result);
+         var failedTests$ = $ElmTest$Run.failedTests(result);
+         var allPassed = _U.eq(failedTests$,
+         0) ? $ElmTest$Run.Pass("") : A2($ElmTest$Run.Fail,
+         "",
+         "");
+         var failedSuites$ = $ElmTest$Run.failedSuites(result);
+         var summary = vcat($List.map(indent(2))(_L.fromArray([A2($Basics._op["++"],
+                                                              $Basics.toString($ElmTest$Test.numberOfSuites(t)),
+                                                              A2($Basics._op["++"],
+                                                              " suites run, containing ",
+                                                              A2($Basics._op["++"],
+                                                              $Basics.toString($ElmTest$Test.numberOfTests(t)),
+                                                              " tests")))
+                                                              ,_U.eq(failedTests$,
+                                                              0) ? "All tests passed" : A2($Basics._op["++"],
+                                                              $Basics.toString(passedSuites$),
+                                                              A2($Basics._op["++"],
+                                                              " suites and ",
+                                                              A2($Basics._op["++"],
+                                                              $Basics.toString(passedTests$),
+                                                              " tests passed")))
+                                                              ,_U.eq(failedTests$,
+                                                              0) ? "" : A2($Basics._op["++"],
+                                                              $Basics.toString(failedSuites$),
+                                                              A2($Basics._op["++"],
+                                                              " suites and ",
+                                                              A2($Basics._op["++"],
+                                                              $Basics.toString(failedTests$),
+                                                              " tests failed")))])));
+         var results$ = function () {
+            switch (allPassed.ctor)
+            {case "Pass":
+               return _L.fromArray([{ctor: "_Tuple2"
+                                    ,_0: ""
+                                    ,_1: allPassed}]);}
+            return A2(pretty,0,result);
+         }();
+         return A2($List._op["::"],
+         {ctor: "_Tuple2"
+         ,_0: summary
+         ,_1: allPassed},
+         results$);
+      }();
+   };
+   var runDisplay = function (t) {
+      return function () {
+         var _ = run(t);
+         var results = function () {
+            switch (_.ctor)
+            {case "::": switch (_._0.ctor)
+                 {case "_Tuple2": return _._1;}
+                 break;}
+            _U.badCase($moduleName,
+            "on line 74, column 37 to 42");
+         }();
+         var summary = function () {
+            switch (_.ctor)
+            {case "::": switch (_._0.ctor)
+                 {case "_Tuple2":
+                    return _._0._0;}
+                 break;}
+            _U.badCase($moduleName,
+            "on line 74, column 37 to 42");
+         }();
+         return vcat(A2($List._op["::"],
+         A2($Basics._op["++"],
+         summary,
+         "\n"),
+         A2($List.map,
+         $Basics.fst,
+         results)));
+      }();
+   };
+   _elm.ElmTest.Runner.String.values = {_op: _op
+                                       ,runDisplay: runDisplay
+                                       ,run: run};
+   return _elm.ElmTest.Runner.String.values;
+};
+Elm.ElmTest = Elm.ElmTest || {};
+Elm.ElmTest.Test = Elm.ElmTest.Test || {};
+Elm.ElmTest.Test.make = function (_elm) {
+   "use strict";
+   _elm.ElmTest = _elm.ElmTest || {};
+   _elm.ElmTest.Test = _elm.ElmTest.Test || {};
+   if (_elm.ElmTest.Test.values)
+   return _elm.ElmTest.Test.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _P = _N.Ports.make(_elm),
+   $moduleName = "ElmTest.Test",
+   $Basics = Elm.Basics.make(_elm),
+   $ElmTest$Assertion = Elm.ElmTest.Assertion.make(_elm),
+   $List = Elm.List.make(_elm);
+   var numberOfSuites = function (test) {
+      return function () {
+         switch (test.ctor)
+         {case "Suite":
+            return 1 + $List.sum($List.map(numberOfSuites)(test._1));
+            case "TestCase": return 0;}
+         _U.badCase($moduleName,
+         "between lines 26 and 30");
+      }();
+   };
+   var numberOfTests = function (test) {
+      return function () {
+         switch (test.ctor)
+         {case "Suite":
+            return $List.sum($List.map(numberOfTests)(test._1));
+            case "TestCase": return 1;}
+         _U.badCase($moduleName,
+         "between lines 21 and 23");
+      }();
+   };
+   var nameOf = function (test) {
+      return function () {
+         switch (test.ctor)
+         {case "Suite": return test._0;
+            case "TestCase":
+            return test._0;}
+         _U.badCase($moduleName,
+         "between lines 16 and 18");
+      }();
+   };
+   var Suite = F2(function (a,b) {
+      return {ctor: "Suite"
+             ,_0: a
+             ,_1: b};
+   });
+   var suite = Suite;
+   var TestCase = F2(function (a,
+   b) {
+      return {ctor: "TestCase"
+             ,_0: a
+             ,_1: b};
+   });
+   var test = F2(function (name,
+   a) {
+      return A2(TestCase,name,a);
+   });
+   var defaultTest = function (a) {
+      return function () {
+         var name = function () {
+            switch (a.ctor)
+            {case "AssertEqual":
+               return A2($Basics._op["++"],
+                 a._1,
+                 A2($Basics._op["++"],
+                 " == ",
+                 a._2));
+               case "AssertNotEqual":
+               return A2($Basics._op["++"],
+                 a._1,
+                 A2($Basics._op["++"],
+                 " /= ",
+                 a._2));
+               case "AssertTrue":
+               return "True";}
+            _U.badCase($moduleName,
+            "between lines 41 and 46");
+         }();
+         return A2(test,name,a);
+      }();
+   };
+   var equals = F2(function (a,b) {
+      return defaultTest(A2($ElmTest$Assertion.assertEqual,
+      a,
+      b));
+   });
+   _elm.ElmTest.Test.values = {_op: _op
+                              ,TestCase: TestCase
+                              ,Suite: Suite
+                              ,nameOf: nameOf
+                              ,numberOfTests: numberOfTests
+                              ,numberOfSuites: numberOfSuites
+                              ,equals: equals
+                              ,test: test
+                              ,defaultTest: defaultTest
+                              ,suite: suite};
+   return _elm.ElmTest.Test.values;
 };
 Elm.Graphics = Elm.Graphics || {};
 Elm.Graphics.Collage = Elm.Graphics.Collage || {};
@@ -1860,23 +2617,85 @@ Elm.Main.make = function (_elm) {
    $moduleName = "Main",
    $Baobab = Elm.Baobab.make(_elm),
    $Basics = Elm.Basics.make(_elm),
-   $Color = Elm.Color.make(_elm),
-   $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
-   $Graphics$Element = Elm.Graphics.Element.make(_elm);
-   var angle = $Basics.degrees(40);
-   var main = A3($Graphics$Collage.collage,
-   500,
-   500,
-   _L.fromArray([$Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.squareAndTriangle,
+   $ElmTest$Assertion = Elm.ElmTest.Assertion.make(_elm),
+   $ElmTest$Runner$Element = Elm.ElmTest.Runner.Element.make(_elm),
+   $ElmTest$Test = Elm.ElmTest.Test.make(_elm),
+   $List = Elm.List.make(_elm),
+   $Random = Elm.Random.make(_elm);
+   var roundCoord = function (_v0) {
+      return function () {
+         switch (_v0.ctor)
+         {case "_Tuple2":
+            return {ctor: "_Tuple2"
+                   ,_0: $Basics.round(_v0._0)
+                   ,_1: $Basics.round(_v0._1)};}
+         _U.badCase($moduleName,
+         "on line 9, column 21 to 37");
+      }();
+   };
+   var tests = A2($ElmTest$Test.suite,
+   "Baobab function",
+   _L.fromArray([A2($ElmTest$Test.suite,
+                "thirdPoint",
+                _L.fromArray([A2($ElmTest$Test.test,
+                             "should calculate the third point coordinates for 45°",
+                             A2($ElmTest$Assertion.assertEqual,
+                             {ctor: "_Tuple2",_0: 5,_1: 5},
+                             roundCoord(A3($Baobab.thirdPoint,
+                             {ctor: "_Tuple2",_0: 0,_1: 0},
+                             10,
+                             $Basics.degrees(45)))))
+                             ,A2($ElmTest$Test.test,
+                             "should calculate the third point coordinates for 60°",
+                             A2($ElmTest$Assertion.assertEqual,
+                             {ctor: "_Tuple2",_0: 3,_1: 4},
+                             roundCoord(A3($Baobab.thirdPoint,
+                             {ctor: "_Tuple2",_0: 0,_1: 0},
+                             10,
+                             $Basics.degrees(60)))))]))
+                ,A2($ElmTest$Test.suite,
+                "squareAndTriangle",
+                _L.fromArray([A2($ElmTest$Test.test,
+                "should calculate the path for a square and a triangle",
+                A2($ElmTest$Assertion.assertEqual,
+                _L.fromArray([{ctor: "_Tuple2"
+                              ,_0: 0
+                              ,_1: 0}
+                             ,{ctor: "_Tuple2",_0: 10,_1: 0}
+                             ,{ctor: "_Tuple2",_0: 10,_1: 10}
+                             ,{ctor: "_Tuple2",_0: 5,_1: 15}
+                             ,{ctor: "_Tuple2",_0: 0,_1: 10}
+                             ,{ctor: "_Tuple2",_0: 10,_1: 10}
+                             ,{ctor: "_Tuple2",_0: 0,_1: 10}
+                             ,{ctor: "_Tuple2"
+                              ,_0: 0
+                              ,_1: 0}]),
+                A2($List.map,
+                roundCoord,
+                A3($Baobab.squareAndTriangle,
                 {ctor: "_Tuple2",_0: 0,_1: 0},
-                100)(angle))
-                ,$Graphics$Collage.move({ctor: "_Tuple2"
-                                        ,_0: 0
-                                        ,_1: 100})($Graphics$Collage.rotate(angle)($Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.squareAndTriangle,
-                {ctor: "_Tuple2",_0: 0,_1: 0},
-                100 * $Basics.cos(angle))($Basics.degrees(60)))))]));
+                10,
+                $Basics.degrees(45)))))]))
+                ,A2($ElmTest$Test.suite,
+                "baobab",
+                _L.fromArray([A2($ElmTest$Test.test,
+                "should produce a collection of paths",
+                function () {
+                   var seed = $Random.initialSeed(0);
+                   return A2($ElmTest$Assertion.assertEqual,
+                   {ctor: "_Tuple2"
+                   ,_0: _L.fromArray([])
+                   ,_1: seed},
+                   A4($Baobab.baobab,
+                   1,
+                   {ctor: "_Tuple2",_0: 0,_1: 0},
+                   100,
+                   seed));
+                }())]))]));
+   var main = $ElmTest$Runner$Element.runDisplay(tests);
    _elm.Main.values = {_op: _op
-                      ,angle: angle
+                      ,roundCoord: roundCoord
+                      ,tests: tests
                       ,main: main};
    return _elm.Main.values;
 };
@@ -2071,6 +2890,38 @@ Elm.Native.Basics.make = function(elm) {
   };
 
   return elm.Native.Basics.values = basics;
+};
+
+Elm.Native.Char = {};
+Elm.Native.Char.make = function(elm) {
+    elm.Native = elm.Native || {};
+    elm.Native.Char = elm.Native.Char || {};
+    if (elm.Native.Char.values) return elm.Native.Char.values;
+
+    var Utils = Elm.Native.Utils.make(elm);
+
+    function isBetween(lo,hi) { return function(chr) {
+	var c = chr.charCodeAt(0);
+	return lo <= c && c <= hi;
+    };
+                              }
+    var isDigit = isBetween('0'.charCodeAt(0),'9'.charCodeAt(0));
+    var chk1 = isBetween('a'.charCodeAt(0),'f'.charCodeAt(0));
+    var chk2 = isBetween('A'.charCodeAt(0),'F'.charCodeAt(0));
+
+    return elm.Native.Char.values = {
+        fromCode : function(c) { return String.fromCharCode(c); },
+        toCode   : function(c) { return c.charCodeAt(0); },
+        toUpper  : function(c) { return Utils.chr(c.toUpperCase()); },
+        toLower  : function(c) { return Utils.chr(c.toLowerCase()); },
+        toLocaleUpper : function(c) { return Utils.chr(c.toLocaleUpperCase()); },
+        toLocaleLower : function(c) { return Utils.chr(c.toLocaleLowerCase()); },
+        isLower    : isBetween('a'.charCodeAt(0),'z'.charCodeAt(0)),
+        isUpper    : isBetween('A'.charCodeAt(0),'Z'.charCodeAt(0)),
+        isDigit    : isDigit,
+        isOctDigit : isBetween('0'.charCodeAt(0),'7'.charCodeAt(0)),
+        isHexDigit : function(c) { return isDigit(c) || chk1(c) || chk2(c); }
+    };
 };
 
 Elm.Native.Color = {};
@@ -4404,6 +5255,276 @@ Elm.Native.Signal.make = function(localRuntime) {
   };
 };
 
+Elm.Native.String = {};
+Elm.Native.String.make = function(elm) {
+    elm.Native = elm.Native || {};
+    elm.Native.String = elm.Native.String || {};
+    if (elm.Native.String.values) return elm.Native.String.values;
+    if ('values' in Elm.Native.String) {
+        return elm.Native.String.values = Elm.Native.String.values;
+    }
+
+    var Char = Elm.Char.make(elm);
+    var List = Elm.Native.List.make(elm);
+    var Maybe = Elm.Maybe.make(elm);
+    var Result = Elm.Result.make(elm);
+    var Utils = Elm.Native.Utils.make(elm);
+
+    function isEmpty(str) {
+        return str.length === 0;
+    }
+    function cons(chr,str) {
+        return chr + str;
+    }
+    function uncons(str) {
+        var hd;
+        return (hd = str[0])
+            ? Maybe.Just(Utils.Tuple2(Utils.chr(hd), str.slice(1)))
+            : Maybe.Nothing;
+    }
+    function append(a,b) {
+        return a + b;
+    }
+    function concat(strs) {
+        return List.toArray(strs).join('');
+    }
+    function length(str) {
+        return str.length;
+    }
+    function map(f,str) {
+        var out = str.split('');
+        for (var i = out.length; i--; ) {
+            out[i] = f(Utils.chr(out[i]));
+        }
+        return out.join('');
+    }
+    function filter(pred,str) {
+        return str.split('').map(Utils.chr).filter(pred).join('');
+    }
+    function reverse(str) {
+        return str.split('').reverse().join('');
+    }
+    function foldl(f,b,str) {
+        var len = str.length;
+        for (var i = 0; i < len; ++i) {
+            b = A2(f, Utils.chr(str[i]), b);
+        }
+        return b;
+    }
+    function foldr(f,b,str) {
+        for (var i = str.length; i--; ) {
+            b = A2(f, Utils.chr(str[i]), b);
+        }
+        return b;
+    }
+
+    function split(sep, str) {
+        return List.fromArray(str.split(sep));
+    }
+    function join(sep, strs) {
+        return List.toArray(strs).join(sep);
+    }
+    function repeat(n, str) {
+        var result = '';
+        while (n > 0) {
+            if (n & 1) result += str;
+            n >>= 1, str += str;
+        }
+        return result;
+    }
+
+    function slice(start, end, str) {
+        return str.slice(start,end);
+    }
+    function left(n, str) {
+        return n < 1 ? "" : str.slice(0,n);
+    }
+    function right(n, str) {
+        return n < 1 ? "" : str.slice(-n);
+    }
+    function dropLeft(n, str) {
+        return n < 1 ? str : str.slice(n);
+    }
+    function dropRight(n, str) {
+        return n < 1 ? str : str.slice(0,-n);
+    }
+
+    function pad(n,chr,str) {
+        var half = (n - str.length) / 2;
+        return repeat(Math.ceil(half),chr) + str + repeat(half|0,chr);
+    }
+    function padRight(n,chr,str) {
+        return str + repeat(n - str.length, chr);
+    }
+    function padLeft(n,chr,str) {
+        return repeat(n - str.length, chr) + str;
+    }
+
+    function trim(str) {
+        return str.trim();
+    }
+    function trimLeft(str) {
+        return str.trimLeft();
+    }
+    function trimRight(str) {
+        return str.trimRight();
+    }
+
+    function words(str) {
+        return List.fromArray(str.trim().split(/\s+/g));
+    }
+    function lines(str) {
+        return List.fromArray(str.split(/\r\n|\r|\n/g));
+    }
+
+    function toUpper(str) {
+        return str.toUpperCase();
+    }
+    function toLower(str) {
+        return str.toLowerCase();
+    }
+
+    function any(pred, str) {
+        for (var i = str.length; i--; ) {
+            if (pred(Utils.chr(str[i]))) return true;
+        }
+        return false;
+    }
+    function all(pred, str) {
+        for (var i = str.length; i--; ) {
+            if (!pred(Utils.chr(str[i]))) return false;
+        }
+        return true;
+    }
+
+    function contains(sub, str) {
+        return str.indexOf(sub) > -1;
+    }
+    function startsWith(sub, str) {
+        return str.indexOf(sub) === 0;
+    }
+    function endsWith(sub, str) {
+        return str.length >= sub.length &&
+               str.lastIndexOf(sub) === str.length - sub.length;
+    }
+    function indexes(sub, str) {
+        var subLen = sub.length;
+        var i = 0;
+        var is = [];
+        while ((i = str.indexOf(sub, i)) > -1) {
+            is.push(i);
+            i = i + subLen;
+        }
+        return List.fromArray(is);
+    }
+
+    function toInt(s) {
+        var len = s.length;
+        if (len === 0) {
+            return Result.Err("could not convert string '" + s + "' to an Int" );
+        }
+        var start = 0;
+        if (s[0] == '-') {
+            if (len === 1) {
+                return Result.Err("could not convert string '" + s + "' to an Int" );
+            }
+            start = 1;
+        }
+        for (var i = start; i < len; ++i) {
+            if (!Char.isDigit(s[i])) {
+                return Result.Err("could not convert string '" + s + "' to an Int" );
+            }
+        }
+        return Result.Ok(parseInt(s, 10));
+    }
+
+    function toFloat(s) {
+        var len = s.length;
+        if (len === 0) {
+            return Result.Err("could not convert string '" + s + "' to a Float" );
+        }
+        var start = 0;
+        if (s[0] == '-') {
+            if (len === 1) {
+                return Result.Err("could not convert string '" + s + "' to a Float" );
+            }
+            start = 1;
+        }
+        var dotCount = 0;
+        for (var i = start; i < len; ++i) {
+            if (Char.isDigit(s[i])) {
+                continue;
+            }
+            if (s[i] === '.') {
+                dotCount += 1;
+                if (dotCount <= 1) {
+                    continue;
+                }
+            }
+            return Result.Err("could not convert string '" + s + "' to a Float" );
+        }
+        return Result.Ok(parseFloat(s));
+    }
+
+    function toList(str) {
+        return List.fromArray(str.split('').map(Utils.chr));
+    }
+    function fromList(chars) {
+        return List.toArray(chars).join('');
+    }
+
+    return Elm.Native.String.values = {
+        isEmpty: isEmpty,
+        cons: F2(cons),
+        uncons: uncons,
+        append: F2(append),
+        concat: concat,
+        length: length,
+        map: F2(map),
+        filter: F2(filter),
+        reverse: reverse,
+        foldl: F3(foldl),
+        foldr: F3(foldr),
+
+        split: F2(split),
+        join: F2(join),
+        repeat: F2(repeat),
+
+        slice: F3(slice),
+        left: F2(left),
+        right: F2(right),
+        dropLeft: F2(dropLeft),
+        dropRight: F2(dropRight),
+
+        pad: F3(pad),
+        padLeft: F3(padLeft),
+        padRight: F3(padRight),
+
+        trim: trim,
+        trimLeft: trimLeft,
+        trimRight: trimRight,
+
+        words: words,
+        lines: lines,
+
+        toUpper: toUpper,
+        toLower: toLower,
+
+        any: F2(any),
+        all: F2(all),
+
+        contains: F2(contains),
+        startsWith: F2(startsWith),
+        endsWith: F2(endsWith),
+        indexes: F2(indexes),
+
+        toInt: toInt,
+        toFloat: toFloat,
+        toList: toList,
+        fromList: fromList
+    };
+};
+
 Elm.Native.Text = {};
 Elm.Native.Text.make = function(elm) {
     elm.Native = elm.Native || {};
@@ -4982,6 +6103,292 @@ Elm.Native.Utils.make = function(localRuntime) {
     };
 };
 
+Elm.Random = Elm.Random || {};
+Elm.Random.make = function (_elm) {
+   "use strict";
+   _elm.Random = _elm.Random || {};
+   if (_elm.Random.values)
+   return _elm.Random.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _P = _N.Ports.make(_elm),
+   $moduleName = "Random",
+   $Basics = Elm.Basics.make(_elm),
+   $List = Elm.List.make(_elm);
+   var magicNum8 = 2147483562;
+   var range = function (_v0) {
+      return function () {
+         return {ctor: "_Tuple2"
+                ,_0: 0
+                ,_1: magicNum8};
+      }();
+   };
+   var magicNum7 = 2137383399;
+   var magicNum6 = 2147483563;
+   var magicNum5 = 3791;
+   var magicNum4 = 40692;
+   var magicNum3 = 52774;
+   var magicNum2 = 12211;
+   var magicNum1 = 53668;
+   var magicNum0 = 40014;
+   var generate = F2(function (_v2,
+   seed) {
+      return function () {
+         switch (_v2.ctor)
+         {case "Generator":
+            return _v2._0(seed);}
+         _U.badCase($moduleName,
+         "on line 247, column 5 to 19");
+      }();
+   });
+   var Seed = F4(function (a,
+   b,
+   c,
+   d) {
+      return {_: {}
+             ,next: b
+             ,range: d
+             ,split: c
+             ,state: a};
+   });
+   var State = F2(function (a,b) {
+      return {ctor: "State"
+             ,_0: a
+             ,_1: b};
+   });
+   var initState = function (s$) {
+      return function () {
+         var s = A2($Basics.max,
+         s$,
+         0 - s$);
+         var q = s / (magicNum6 - 1) | 0;
+         var s2 = A2($Basics._op["%"],
+         q,
+         magicNum7 - 1);
+         var s1 = A2($Basics._op["%"],
+         s,
+         magicNum6 - 1);
+         return A2(State,s1 + 1,s2 + 1);
+      }();
+   };
+   var next = function (_v5) {
+      return function () {
+         switch (_v5.ctor)
+         {case "State":
+            return function () {
+                 var k$ = _v5._1 / magicNum3 | 0;
+                 var s2$ = magicNum4 * (_v5._1 - k$ * magicNum3) - k$ * magicNum5;
+                 var s2$$ = _U.cmp(s2$,
+                 0) < 0 ? s2$ + magicNum7 : s2$;
+                 var k = _v5._0 / magicNum1 | 0;
+                 var s1$ = magicNum0 * (_v5._0 - k * magicNum1) - k * magicNum2;
+                 var s1$$ = _U.cmp(s1$,
+                 0) < 0 ? s1$ + magicNum6 : s1$;
+                 var z = s1$$ - s2$$;
+                 var z$ = _U.cmp(z,
+                 1) < 0 ? z + magicNum8 : z;
+                 return {ctor: "_Tuple2"
+                        ,_0: z$
+                        ,_1: A2(State,s1$$,s2$$)};
+              }();}
+         _U.badCase($moduleName,
+         "between lines 291 and 300");
+      }();
+   };
+   var split = function (_v9) {
+      return function () {
+         switch (_v9.ctor)
+         {case "State":
+            return function () {
+                 var _raw = $Basics.snd(next(_v9)),
+                 $ = _raw.ctor === "State" ? _raw : _U.badCase($moduleName,
+                 "on line 307, column 25 to 38"),
+                 t1 = $._0,
+                 t2 = $._1;
+                 var new_s2 = _U.eq(_v9._1,
+                 1) ? magicNum7 - 1 : _v9._1 - 1;
+                 var new_s1 = _U.eq(_v9._0,
+                 magicNum6 - 1) ? 1 : _v9._0 + 1;
+                 return {ctor: "_Tuple2"
+                        ,_0: A2(State,new_s1,t2)
+                        ,_1: A2(State,t1,new_s2)};
+              }();}
+         _U.badCase($moduleName,
+         "between lines 305 and 309");
+      }();
+   };
+   var initialSeed = function (n) {
+      return A4(Seed,
+      initState(n),
+      next,
+      split,
+      range);
+   };
+   var Generator = function (a) {
+      return {ctor: "Generator"
+             ,_0: a};
+   };
+   var customGenerator = function (generate) {
+      return Generator(generate);
+   };
+   var listHelp = F4(function (list,
+   n,
+   generate,
+   seed) {
+      return _U.cmp(n,
+      1) < 0 ? {ctor: "_Tuple2"
+               ,_0: $List.reverse(list)
+               ,_1: seed} : function () {
+         var $ = generate(seed),
+         value = $._0,
+         seed$ = $._1;
+         return A4(listHelp,
+         A2($List._op["::"],value,list),
+         n - 1,
+         generate,
+         seed$);
+      }();
+   });
+   var list = F2(function (n,
+   _v13) {
+      return function () {
+         switch (_v13.ctor)
+         {case "Generator":
+            return Generator(function (seed) {
+                 return A4(listHelp,
+                 _L.fromArray([]),
+                 n,
+                 _v13._0,
+                 seed);
+              });}
+         _U.badCase($moduleName,
+         "between lines 183 and 184");
+      }();
+   });
+   var pair = F2(function (_v16,
+   _v17) {
+      return function () {
+         switch (_v17.ctor)
+         {case "Generator":
+            return function () {
+                 switch (_v16.ctor)
+                 {case "Generator":
+                    return Generator(function (seed) {
+                         return function () {
+                            var $ = _v16._0(seed),
+                            left = $._0,
+                            seed$ = $._1;
+                            var $ = _v17._0(seed$),
+                            right = $._0,
+                            seed$$ = $._1;
+                            return {ctor: "_Tuple2"
+                                   ,_0: {ctor: "_Tuple2"
+                                        ,_0: left
+                                        ,_1: right}
+                                   ,_1: seed$$};
+                         }();
+                      });}
+                 _U.badCase($moduleName,
+                 "between lines 160 and 164");
+              }();}
+         _U.badCase($moduleName,
+         "between lines 160 and 164");
+      }();
+   });
+   var minInt = -2147483648;
+   var maxInt = 2147483647;
+   var iLogBase = F2(function (b,
+   i) {
+      return _U.cmp(i,
+      b) < 0 ? 1 : 1 + A2(iLogBase,
+      b,
+      i / b | 0);
+   });
+   var $int = F2(function (a,b) {
+      return Generator(function (seed) {
+         return function () {
+            var base = 2147483561;
+            var f = F3(function (n,
+            acc,
+            state) {
+               return function () {
+                  switch (n)
+                  {case 0: return {ctor: "_Tuple2"
+                                  ,_0: acc
+                                  ,_1: state};}
+                  return function () {
+                     var $ = seed.next(state),
+                     x = $._0,
+                     state$ = $._1;
+                     return A3(f,
+                     n - 1,
+                     x + acc * base,
+                     state$);
+                  }();
+               }();
+            });
+            var $ = _U.cmp(a,
+            b) < 0 ? {ctor: "_Tuple2"
+                     ,_0: a
+                     ,_1: b} : {ctor: "_Tuple2"
+                               ,_0: b
+                               ,_1: a},
+            lo = $._0,
+            hi = $._1;
+            var k = hi - lo + 1;
+            var n = A2(iLogBase,base,k);
+            var $ = A3(f,n,1,seed.state),
+            v = $._0,
+            state$ = $._1;
+            return {ctor: "_Tuple2"
+                   ,_0: lo + A2($Basics._op["%"],
+                   v,
+                   k)
+                   ,_1: _U.replace([["state"
+                                    ,state$]],
+                   seed)};
+         }();
+      });
+   });
+   var $float = F2(function (a,b) {
+      return Generator(function (seed) {
+         return function () {
+            var $ = A2(generate,
+            A2($int,minInt,maxInt),
+            seed),
+            number = $._0,
+            seed$ = $._1;
+            var negativeOneToOne = $Basics.toFloat(number) / $Basics.toFloat(maxInt - minInt);
+            var $ = _U.cmp(a,
+            b) < 0 ? {ctor: "_Tuple2"
+                     ,_0: a
+                     ,_1: b} : {ctor: "_Tuple2"
+                               ,_0: b
+                               ,_1: a},
+            lo = $._0,
+            hi = $._1;
+            var scaled = (lo + hi) / 2 + (hi - lo) * negativeOneToOne;
+            return {ctor: "_Tuple2"
+                   ,_0: scaled
+                   ,_1: seed$};
+         }();
+      });
+   });
+   _elm.Random.values = {_op: _op
+                        ,$int: $int
+                        ,$float: $float
+                        ,list: list
+                        ,pair: pair
+                        ,minInt: minInt
+                        ,maxInt: maxInt
+                        ,generate: generate
+                        ,initialSeed: initialSeed
+                        ,customGenerator: customGenerator
+                        ,Seed: Seed};
+   return _elm.Random.values;
+};
 Elm.Result = Elm.Result || {};
 Elm.Result.make = function (_elm) {
    "use strict";
@@ -5326,6 +6733,108 @@ Elm.Signal.make = function (_elm) {
                         ,send: send
                         ,subscribe: subscribe};
    return _elm.Signal.values;
+};
+Elm.String = Elm.String || {};
+Elm.String.make = function (_elm) {
+   "use strict";
+   _elm.String = _elm.String || {};
+   if (_elm.String.values)
+   return _elm.String.values;
+   var _op = {},
+   _N = Elm.Native,
+   _U = _N.Utils.make(_elm),
+   _L = _N.List.make(_elm),
+   _P = _N.Ports.make(_elm),
+   $moduleName = "String",
+   $Maybe = Elm.Maybe.make(_elm),
+   $Native$String = Elm.Native.String.make(_elm),
+   $Result = Elm.Result.make(_elm);
+   var fromList = $Native$String.fromList;
+   var toList = $Native$String.toList;
+   var toFloat = $Native$String.toFloat;
+   var toInt = $Native$String.toInt;
+   var indices = $Native$String.indexes;
+   var indexes = $Native$String.indexes;
+   var endsWith = $Native$String.endsWith;
+   var startsWith = $Native$String.startsWith;
+   var contains = $Native$String.contains;
+   var all = $Native$String.all;
+   var any = $Native$String.any;
+   var toLower = $Native$String.toLower;
+   var toUpper = $Native$String.toUpper;
+   var lines = $Native$String.lines;
+   var words = $Native$String.words;
+   var trimRight = $Native$String.trimRight;
+   var trimLeft = $Native$String.trimLeft;
+   var trim = $Native$String.trim;
+   var padRight = $Native$String.padRight;
+   var padLeft = $Native$String.padLeft;
+   var pad = $Native$String.pad;
+   var dropRight = $Native$String.dropRight;
+   var dropLeft = $Native$String.dropLeft;
+   var right = $Native$String.right;
+   var left = $Native$String.left;
+   var slice = $Native$String.slice;
+   var repeat = $Native$String.repeat;
+   var join = $Native$String.join;
+   var split = $Native$String.split;
+   var foldr = $Native$String.foldr;
+   var foldl = $Native$String.foldl;
+   var reverse = $Native$String.reverse;
+   var filter = $Native$String.filter;
+   var map = $Native$String.map;
+   var length = $Native$String.length;
+   var concat = $Native$String.concat;
+   var append = $Native$String.append;
+   var uncons = $Native$String.uncons;
+   var cons = $Native$String.cons;
+   var fromChar = function ($char) {
+      return A2(cons,$char,"");
+   };
+   var isEmpty = $Native$String.isEmpty;
+   _elm.String.values = {_op: _op
+                        ,isEmpty: isEmpty
+                        ,cons: cons
+                        ,fromChar: fromChar
+                        ,uncons: uncons
+                        ,append: append
+                        ,concat: concat
+                        ,length: length
+                        ,map: map
+                        ,filter: filter
+                        ,reverse: reverse
+                        ,foldl: foldl
+                        ,foldr: foldr
+                        ,split: split
+                        ,join: join
+                        ,repeat: repeat
+                        ,slice: slice
+                        ,left: left
+                        ,right: right
+                        ,dropLeft: dropLeft
+                        ,dropRight: dropRight
+                        ,pad: pad
+                        ,padLeft: padLeft
+                        ,padRight: padRight
+                        ,trim: trim
+                        ,trimLeft: trimLeft
+                        ,trimRight: trimRight
+                        ,words: words
+                        ,lines: lines
+                        ,toUpper: toUpper
+                        ,toLower: toLower
+                        ,any: any
+                        ,all: all
+                        ,contains: contains
+                        ,startsWith: startsWith
+                        ,endsWith: endsWith
+                        ,indexes: indexes
+                        ,indices: indices
+                        ,toInt: toInt
+                        ,toFloat: toFloat
+                        ,toList: toList
+                        ,fromList: fromList};
+   return _elm.String.values;
 };
 Elm.Text = Elm.Text || {};
 Elm.Text.make = function (_elm) {

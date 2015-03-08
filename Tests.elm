@@ -1,7 +1,8 @@
 import ElmTest.Test (..)
 import ElmTest.Assertion (..)
 import ElmTest.Runner.Element (..)
-import List 
+import List
+import Random (..)
 import Baobab (..)
 
 roundCoord : (Float, Float) -> (Int,Int)
@@ -16,8 +17,13 @@ tests = suite "Baobab function"
             ]
         ,suite "squareAndTriangle"
             [test "should calculate the path for a square and a triangle"
-                (assertEqual [] (List.map roundCoord (squareAndTriangle (0,0) 10 (degrees 45))))
+                (assertEqual [(0,0),(10,0),(10,10),(5,15),(0,10),(10,10),(0,10),(0,0)]
+                  (List.map roundCoord (squareAndTriangle (0,0) 10 (degrees 45))))
             ]
+        ,suite "baobab"
+            [test "should produce a collection of paths"
+                (let seed = initialSeed 0
+                in (assertEqual ([],seed) (baobab 1 (0,0) 100 seed)))]
         ]
 
 main = runDisplay tests
