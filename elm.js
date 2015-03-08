@@ -1863,18 +1863,20 @@ Elm.Main.make = function (_elm) {
    $Color = Elm.Color.make(_elm),
    $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
    $Graphics$Element = Elm.Graphics.Element.make(_elm);
+   var angle = $Basics.degrees(40);
    var main = A3($Graphics$Collage.collage,
    500,
    500,
    _L.fromArray([$Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.squareAndTriangle,
                 {ctor: "_Tuple2",_0: 0,_1: 0},
-                100)($Basics.degrees(15)))
+                100)(angle))
                 ,$Graphics$Collage.move({ctor: "_Tuple2"
                                         ,_0: 0
-                                        ,_1: 100})($Graphics$Collage.rotate($Basics.degrees(15))($Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.squareAndTriangle,
+                                        ,_1: 100})($Graphics$Collage.rotate(angle)($Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.squareAndTriangle,
                 {ctor: "_Tuple2",_0: 0,_1: 0},
-                100 * $Basics.cos($Basics.degrees(15)))($Basics.degrees(60)))))]));
+                100 * $Basics.cos(angle))($Basics.degrees(60)))))]));
    _elm.Main.values = {_op: _op
+                      ,angle: angle
                       ,main: main};
    return _elm.Main.values;
 };
