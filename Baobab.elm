@@ -4,6 +4,21 @@ import Graphics.Collage (..)
 import Random (..)
 import List
 
+
+type alias Angle = Float
+type alias Level = Int
+type alias Point = (Float,Float)
+type alias Size  = Float
+
+baobab : Level -> Point -> Size -> Angle -> Seed -> (List Path, Seed)
+baobab level (x,y) size alpha seed =
+    if | level == 0 -> ([],seed)
+       | otherwise  -> 
+           let (rand, newSeed) = generate (float 0 9) seed
+               phi  = degrees (40.0 + rand)
+               path = squareAndTriangle (x,y) size phi
+           in ([path],newSeed)
+
 thirdPoint : (Float,Float) -> Float -> Float -> (Float,Float)
 thirdPoint (x,y) h alpha = 
     let cosAlpha = cos alpha
@@ -33,12 +48,4 @@ translate : (Float,Float) -> Path -> Path
 translate (x0,y0) pts =
    let translatePoint (x0,y0) (x,y) = (x0+x, y0+y)
    in List.map (translatePoint (x0,y0)) pts
-
-baobab : Int -> (Float,Float) -> Float -> Seed -> (List Path,Seed)
-baobab n (x,y) h seed = 
-    let
-        (r,newSeed) = generate (float 0 9) seed
-        alpha = degrees (40.0 + r)         
-        p = squareAndTriangle (x,y) h alpha
-    in ([p],newSeed)
 
