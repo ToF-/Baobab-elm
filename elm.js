@@ -1971,33 +1971,43 @@ Elm.Main.make = function (_elm) {
    $Basics = Elm.Basics.make(_elm),
    $Color = Elm.Color.make(_elm),
    $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
-   $Graphics$Element = Elm.Graphics.Element.make(_elm);
-   var angle = $Basics.degrees(40);
-   var tp = A3($Baobab.thirdPoint,
-   {ctor: "_Tuple2",_0: 0,_1: 100},
-   100,
+   $Graphics$Element = Elm.Graphics.Element.make(_elm),
+   $List = Elm.List.make(_elm);
+   var origin = {ctor: "_Tuple2"
+                ,_0: 0
+                ,_1: 0};
+   var height = 80;
+   var second = {ctor: "_Tuple2"
+                ,_0: $Basics.fst(origin)
+                ,_1: $Basics.snd(origin) + height};
+   var angle = $Basics.degrees(30);
+   var third = A3($Baobab.thirdPoint,
+   second,
+   height,
    angle);
-   var main = A3($Graphics$Collage.collage,
-   500,
-   500,
-   _L.fromArray([$Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.squareAndTriangle,
-                {ctor: "_Tuple2",_0: 0,_1: 0},
-                100)(angle))
-                ,$Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.rotate,
-                {ctor: "_Tuple2",_0: 0,_1: 100},
-                angle)($Baobab.translate({ctor: "_Tuple2"
-                                         ,_0: 0
-                                         ,_1: 100})(A2($Baobab.squareAndTriangle,
-                {ctor: "_Tuple2",_0: 0,_1: 0},
-                100 * $Basics.cos(angle))($Basics.degrees(60)))))
-                ,$Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.rotate,
-                tp,
-                angle - $Basics.pi / 2.0)($Baobab.translate(tp)(A2($Baobab.squareAndTriangle,
-                {ctor: "_Tuple2",_0: 0,_1: 0},
-                100 * $Basics.sin(angle))($Basics.degrees(60)))))]));
+   var main = A2($Graphics$Collage.collage,
+   1000,
+   1200)(A2($List.map,
+   $Graphics$Collage.traced($Graphics$Collage.solid($Color.red)),
+   _L.fromArray([A2($Baobab.squareAndTriangle,
+                origin,
+                height)(angle)
+                ,A2($Baobab.rotate,
+                second,
+                angle)($Baobab.translate(second)(A2($Baobab.squareAndTriangle,
+                origin,
+                height * $Basics.cos(angle))(angle)))
+                ,A2($Baobab.rotate,
+                third,
+                angle - $Basics.pi / 2.0)($Baobab.translate(third)(A2($Baobab.squareAndTriangle,
+                origin,
+                height * $Basics.sin(angle))(angle)))])));
    _elm.Main.values = {_op: _op
                       ,angle: angle
-                      ,tp: tp
+                      ,height: height
+                      ,origin: origin
+                      ,second: second
+                      ,third: third
                       ,main: main};
    return _elm.Main.values;
 };
