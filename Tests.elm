@@ -20,9 +20,12 @@ tests = suite "Baobab function"
                 (assertEqual [(0,0),(10,0),(10,10),(5,15),(0,10),(10,10),(0,10),(0,0)]
                   (List.map roundCoord (squareAndTriangle (0,0) 10 (degrees 45))))
             ]
-        ,suite "rotate" 
-            [test "should rotate a path around a point" 
-                (assertEqual [(0,0),(1,1)] (List.map roundCoord (rotate (0,0) (degrees 45) [(0,0),(1,0)])))]
+        ,suite "tranformations:" 
+            [test "rotate should rotate a path around a point" 
+                (assertEqual [(1,2),(1,1)] (List.map roundCoord (rotate (0,0) (degrees 45) [(2,1),(1,0)])))
+            ,test "translate should translate a path to a point" 
+                (assertEqual [(4,4),(3,3)] (List.map roundCoord (translate (2,3) [(2,1),(1,0)])))]
+
         ]
 
 main = runDisplay tests

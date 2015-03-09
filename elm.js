@@ -15,8 +15,7 @@ Elm.Baobab.make = function (_elm) {
    $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
    $List = Elm.List.make(_elm),
    $Random = Elm.Random.make(_elm);
-   var rotatePoint = F3(function (_v0,
-   phi,
+   var translatePoint = F2(function (_v0,
    _v1) {
       return function () {
          switch (_v1.ctor)
@@ -24,14 +23,47 @@ Elm.Baobab.make = function (_elm) {
             return function () {
                  switch (_v0.ctor)
                  {case "_Tuple2":
+                    return {ctor: "_Tuple2"
+                           ,_0: _v0._0 + _v1._0
+                           ,_1: _v0._1 + _v1._1};}
+                 _U.badCase($moduleName,
+                 "on line 34, column 33 to 43");
+              }();}
+         _U.badCase($moduleName,
+         "on line 34, column 33 to 43");
+      }();
+   });
+   var translate = F2(function (_v8,
+   pts) {
+      return function () {
+         switch (_v8.ctor)
+         {case "_Tuple2":
+            return A2($List.map,
+              translatePoint({ctor: "_Tuple2"
+                             ,_0: _v8._0
+                             ,_1: _v8._1}),
+              pts);}
+         _U.badCase($moduleName,
+         "on line 37, column 25 to 62");
+      }();
+   });
+   var rotatePoint = F3(function (_v12,
+   phi,
+   _v13) {
+      return function () {
+         switch (_v13.ctor)
+         {case "_Tuple2":
+            return function () {
+                 switch (_v12.ctor)
+                 {case "_Tuple2":
                     return function () {
-                         var sphi = $Basics.sin(phi);
-                         var cphi = $Basics.cos(phi);
-                         var c1 = _v0._0 - _v0._0 * cphi + _v0._1 * sphi;
-                         var c2 = _v0._1 - _v0._0 * sphi - _v0._1 * cphi;
+                         var sinPhi = $Basics.sin(phi);
+                         var cosPhi = $Basics.cos(phi);
+                         var dx = _v12._0 - _v12._0 * cosPhi + _v12._1 * sinPhi;
+                         var dy = _v12._1 - _v12._0 * sinPhi - _v12._1 * cosPhi;
                          return {ctor: "_Tuple2"
-                                ,_0: _v1._0 * cphi - _v1._1 * sphi + c1
-                                ,_1: _v1._0 * sphi + _v1._1 * cphi + c2};
+                                ,_0: _v13._0 * cosPhi - _v13._1 * sinPhi + dx
+                                ,_1: _v13._0 * sinPhi + _v13._1 * cosPhi + dy};
                       }();}
                  _U.badCase($moduleName,
                  "between lines 23 and 28");
@@ -40,89 +72,89 @@ Elm.Baobab.make = function (_elm) {
          "between lines 23 and 28");
       }();
    });
-   var rotate = F3(function (_v8,
+   var rotate = F3(function (_v20,
    phi,
    pts) {
       return function () {
-         switch (_v8.ctor)
+         switch (_v20.ctor)
          {case "_Tuple2":
             return A2($List.map,
               A2(rotatePoint,
               {ctor: "_Tuple2"
-              ,_0: _v8._0
-              ,_1: _v8._1},
+              ,_0: _v20._0
+              ,_1: _v20._1},
               phi),
               pts);}
          _U.badCase($moduleName,
          "on line 31, column 26 to 64");
       }();
    });
-   var thirdPoint = F3(function (_v12,
+   var thirdPoint = F3(function (_v24,
    h,
    alpha) {
       return function () {
-         switch (_v12.ctor)
+         switch (_v24.ctor)
          {case "_Tuple2":
             return function () {
                  var sinAlpha = $Basics.sin(alpha);
                  var cosAlpha = $Basics.cos(alpha);
                  var a = h * cosAlpha;
                  return {ctor: "_Tuple2"
-                        ,_0: _v12._0 + a * cosAlpha
-                        ,_1: _v12._1 + a * sinAlpha};
+                        ,_0: _v24._0 + a * cosAlpha
+                        ,_1: _v24._1 + a * sinAlpha};
               }();}
          _U.badCase($moduleName,
          "between lines 9 and 12");
       }();
    });
-   var squareAndTriangle = F3(function (_v16,
+   var squareAndTriangle = F3(function (_v28,
    h,
    alpha) {
       return function () {
-         switch (_v16.ctor)
+         switch (_v28.ctor)
          {case "_Tuple2":
             return function () {
                  var $ = A3(thirdPoint,
                  {ctor: "_Tuple2"
-                 ,_0: _v16._0
-                 ,_1: _v16._1 + h},
+                 ,_0: _v28._0
+                 ,_1: _v28._1 + h},
                  h,
                  alpha),
                  x4 = $._0,
                  y4 = $._1;
                  return _L.fromArray([{ctor: "_Tuple2"
-                                      ,_0: _v16._0
-                                      ,_1: _v16._1}
+                                      ,_0: _v28._0
+                                      ,_1: _v28._1}
                                      ,{ctor: "_Tuple2"
-                                      ,_0: _v16._0 + h
-                                      ,_1: _v16._1}
+                                      ,_0: _v28._0 + h
+                                      ,_1: _v28._1}
                                      ,{ctor: "_Tuple2"
-                                      ,_0: _v16._0 + h
-                                      ,_1: _v16._1 + h}
+                                      ,_0: _v28._0 + h
+                                      ,_1: _v28._1 + h}
                                      ,{ctor: "_Tuple2",_0: x4,_1: y4}
                                      ,{ctor: "_Tuple2"
-                                      ,_0: _v16._0
-                                      ,_1: _v16._1 + h}
+                                      ,_0: _v28._0
+                                      ,_1: _v28._1 + h}
                                      ,{ctor: "_Tuple2"
-                                      ,_0: _v16._0 + h
-                                      ,_1: _v16._1 + h}
+                                      ,_0: _v28._0 + h
+                                      ,_1: _v28._1 + h}
                                      ,{ctor: "_Tuple2"
-                                      ,_0: _v16._0
-                                      ,_1: _v16._1 + h}
+                                      ,_0: _v28._0
+                                      ,_1: _v28._1 + h}
                                      ,{ctor: "_Tuple2"
-                                      ,_0: _v16._0
-                                      ,_1: _v16._1}]);
+                                      ,_0: _v28._0
+                                      ,_1: _v28._1}]);
               }();}
          _U.badCase($moduleName,
          "between lines 17 and 19");
       }();
    });
    var baobab = F4(function (n,
-   _v20,
+   _v32,
    h,
    seed) {
       return function () {
-         switch (_v20.ctor)
+         switch (_v32.ctor)
          {case "_Tuple2":
             return function () {
                  var $ = A2($Random.generate,
@@ -133,8 +165,8 @@ Elm.Baobab.make = function (_elm) {
                  var alpha = $Basics.degrees(40.0 + r);
                  var p = A3(squareAndTriangle,
                  {ctor: "_Tuple2"
-                 ,_0: _v20._0
-                 ,_1: _v20._1},
+                 ,_0: _v32._0
+                 ,_1: _v32._1},
                  h,
                  alpha);
                  return {ctor: "_Tuple2"
@@ -142,7 +174,7 @@ Elm.Baobab.make = function (_elm) {
                         ,_1: newSeed};
               }();}
          _U.badCase($moduleName,
-         "between lines 35 and 39");
+         "between lines 41 and 45");
       }();
    });
    _elm.Baobab.values = {_op: _op
@@ -150,6 +182,8 @@ Elm.Baobab.make = function (_elm) {
                         ,squareAndTriangle: squareAndTriangle
                         ,rotatePoint: rotatePoint
                         ,rotate: rotate
+                        ,translatePoint: translatePoint
+                        ,translate: translate
                         ,baobab: baobab};
    return _elm.Baobab.values;
 };
@@ -1939,6 +1973,10 @@ Elm.Main.make = function (_elm) {
    $Graphics$Collage = Elm.Graphics.Collage.make(_elm),
    $Graphics$Element = Elm.Graphics.Element.make(_elm);
    var angle = $Basics.degrees(40);
+   var tp = A3($Baobab.thirdPoint,
+   {ctor: "_Tuple2",_0: 0,_1: 100},
+   100,
+   angle);
    var main = A3($Graphics$Collage.collage,
    500,
    500,
@@ -1947,11 +1985,19 @@ Elm.Main.make = function (_elm) {
                 100)(angle))
                 ,$Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.rotate,
                 {ctor: "_Tuple2",_0: 0,_1: 100},
-                angle)(A2($Baobab.squareAndTriangle,
-                {ctor: "_Tuple2",_0: 0,_1: 100},
-                100 * $Basics.cos(angle))($Basics.degrees(60))))]));
+                angle)($Baobab.translate({ctor: "_Tuple2"
+                                         ,_0: 0
+                                         ,_1: 100})(A2($Baobab.squareAndTriangle,
+                {ctor: "_Tuple2",_0: 0,_1: 0},
+                100 * $Basics.cos(angle))($Basics.degrees(60)))))
+                ,$Graphics$Collage.traced($Graphics$Collage.solid($Color.red))(A2($Baobab.rotate,
+                tp,
+                angle - $Basics.pi / 2.0)($Baobab.translate(tp)(A2($Baobab.squareAndTriangle,
+                {ctor: "_Tuple2",_0: 0,_1: 0},
+                100 * $Basics.sin(angle))($Basics.degrees(60)))))]));
    _elm.Main.values = {_op: _op
                       ,angle: angle
+                      ,tp: tp
                       ,main: main};
    return _elm.Main.values;
 };

@@ -21,14 +21,20 @@ squareAndTriangle (x,y) h alpha =
 rotatePoint : (Float,Float) -> Float -> (Float,Float) -> (Float,Float)
 rotatePoint (x0,y0) phi (x,y) =
     let
-        cphi = cos phi
-        sphi = sin phi
-        c1   = x0 - x0 * cphi + y0 * sphi
-        c2   = y0 - x0 * sphi - y0 * cphi
-    in (x*cphi-y*sphi+c1, x*sphi+y*cphi+c2)
+        cosPhi = cos phi
+        sinPhi = sin phi
+        dx   = x0 - x0 * cosPhi + y0 * sinPhi
+        dy   = y0 - x0 * sinPhi - y0 * cosPhi
+    in (x * cosPhi - y * sinPhi + dx, x * sinPhi + y * cosPhi + dy)
 
 rotate : (Float,Float) -> Float -> Path -> Path
 rotate (xc,yc) phi pts = List.map (rotatePoint (xc,yc) phi) pts
+
+translatePoint : (Float,Float) -> (Float,Float) -> (Float,Float) 
+translatePoint (x0,y0) (x,y) = (x0+x, y0+y)
+
+translate : (Float,Float) -> Path -> Path
+translate (x0,y0) pts = List.map (translatePoint (x0,y0)) pts
 
 baobab : Int -> (Float,Float) -> Float -> Seed -> (List Path,Seed)
 baobab n (x,y) h seed = 
