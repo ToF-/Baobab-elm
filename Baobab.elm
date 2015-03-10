@@ -12,12 +12,20 @@ type alias Size  = Float
 
 baobab : Level -> Point -> Size -> Angle -> Seed -> (List Path, Seed)
 baobab level (x,y) size alpha seed =
-    if | level == 0 -> ([],seed)
-       | otherwise  -> 
-           let (rand, newSeed) = generate (float 0 9) seed
-               phi  = degrees (40.0 + rand)
-               path = squareAndTriangle (x,y) size phi
-           in ([path],newSeed)
+    case level of 
+       0 -> ([],seed)
+       _ -> let (rand, newSeed) = generate (float -15 15) seed
+                phi  = degrees (45.0 + rand)
+                origin= (x,y)
+                second = (x,y+size)
+                third  = thirdPoint second size phi
+                path1 = squareAndTriangle (x,y) size phi
+                (pathLeft,newNewSeed) = baobab (level-1) second (size * cos phi) (phi) newSeed
+                path2 = List.concat <| pathLeft
+                (pathRight,nextSeed) = baobab (level-1) third (size * sin phi) (phi-pi/2.0) newNewSeed
+                path3 = List.concat <| pathRight
+
+            in (List.map (rotate origin alpha) [path1,path2,path3],nextSeed)
 
 thirdPoint : (Float,Float) -> Float -> Float -> (Float,Float)
 thirdPoint (x,y) h alpha = 

@@ -13,7 +13,7 @@ second = (fst origin,snd origin + height)
 third  = B.thirdPoint second height angle
 
 main : Element
-main = let (b,_) = B.baobab 1 (0,0) 100 0 (initialSeed 5) 
+main = let (b,_) = B.baobab 10 (0,0) 100 (degrees 10) (initialSeed 407) 
        in collage 1000 1200 <| List.map (traced (solid red)) b
           {--
     [B.squareAndTriangle origin height <| angle

@@ -33,10 +33,10 @@ Elm.Baobab.make = function (_elm) {
                                          ,_0: _v4._0 + _v5._0
                                          ,_1: _v4._1 + _v5._1};}
                                _U.badCase($moduleName,
-                               "on line 49, column 40 to 50");
+                               "on line 57, column 40 to 50");
                             }();}
                        _U.badCase($moduleName,
-                       "on line 49, column 40 to 50");
+                       "on line 57, column 40 to 50");
                     }();
                  });
                  return A2($List.map,
@@ -46,7 +46,7 @@ Elm.Baobab.make = function (_elm) {
                  pts);
               }();}
          _U.badCase($moduleName,
-         "between lines 49 and 50");
+         "between lines 57 and 58");
       }();
    });
    var rotate = F3(function (_v12,
@@ -75,10 +75,10 @@ Elm.Baobab.make = function (_elm) {
                                               ,_1: _v17._0 * sinPhi + _v17._1 * cosPhi + dy};
                                     }();}
                                _U.badCase($moduleName,
-                               "between lines 39 and 43");
+                               "between lines 47 and 51");
                             }();}
                        _U.badCase($moduleName,
-                       "between lines 39 and 43");
+                       "between lines 47 and 51");
                     }();
                  });
                  return A2($List.map,
@@ -90,7 +90,7 @@ Elm.Baobab.make = function (_elm) {
                  pts);
               }();}
          _U.badCase($moduleName,
-         "between lines 38 and 44");
+         "between lines 46 and 52");
       }();
    });
    var thirdPoint = F3(function (_v24,
@@ -108,7 +108,7 @@ Elm.Baobab.make = function (_elm) {
                         ,_1: _v24._1 + a * sinAlpha};
               }();}
          _U.badCase($moduleName,
-         "between lines 24 and 27");
+         "between lines 32 and 35");
       }();
    });
    var squareAndTriangle = F3(function (_v28,
@@ -150,7 +150,7 @@ Elm.Baobab.make = function (_elm) {
                                       ,_1: _v28._1}]);
               }();}
          _U.badCase($moduleName,
-         "between lines 32 and 33");
+         "between lines 40 and 41");
       }();
    });
    var baobab = F5(function (level,
@@ -161,28 +161,63 @@ Elm.Baobab.make = function (_elm) {
       return function () {
          switch (_v32.ctor)
          {case "_Tuple2":
-            return _U.eq(level,
-              0) ? {ctor: "_Tuple2"
-                   ,_0: _L.fromArray([])
-                   ,_1: seed} : function () {
-                 var $ = A2($Random.generate,
-                 A2($Random.$float,0,9),
-                 seed),
-                 rand = $._0,
-                 newSeed = $._1;
-                 var phi = $Basics.degrees(40.0 + rand);
-                 var path = A3(squareAndTriangle,
-                 {ctor: "_Tuple2"
-                 ,_0: _v32._0
-                 ,_1: _v32._1},
-                 size,
-                 phi);
-                 return {ctor: "_Tuple2"
-                        ,_0: _L.fromArray([path])
-                        ,_1: newSeed};
+            return function () {
+                 switch (level)
+                 {case 0: return {ctor: "_Tuple2"
+                                 ,_0: _L.fromArray([])
+                                 ,_1: seed};}
+                 return function () {
+                    var second = {ctor: "_Tuple2"
+                                 ,_0: _v32._0
+                                 ,_1: _v32._1 + size};
+                    var origin = {ctor: "_Tuple2"
+                                 ,_0: _v32._0
+                                 ,_1: _v32._1};
+                    var $ = A2($Random.generate,
+                    A2($Random.$float,-15,15),
+                    seed),
+                    rand = $._0,
+                    newSeed = $._1;
+                    var phi = $Basics.degrees(45.0 + rand);
+                    var third = A3(thirdPoint,
+                    second,
+                    size,
+                    phi);
+                    var path1 = A3(squareAndTriangle,
+                    {ctor: "_Tuple2"
+                    ,_0: _v32._0
+                    ,_1: _v32._1},
+                    size,
+                    phi);
+                    var $ = A5(baobab,
+                    level - 1,
+                    second,
+                    size * $Basics.cos(phi),
+                    phi,
+                    newSeed),
+                    pathLeft = $._0,
+                    newNewSeed = $._1;
+                    var path2 = $List.concat(pathLeft);
+                    var $ = A5(baobab,
+                    level - 1,
+                    third,
+                    size * $Basics.sin(phi),
+                    phi - $Basics.pi / 2.0,
+                    newNewSeed),
+                    pathRight = $._0,
+                    nextSeed = $._1;
+                    var path3 = $List.concat(pathRight);
+                    return {ctor: "_Tuple2"
+                           ,_0: A2($List.map,
+                           A2(rotate,origin,alpha),
+                           _L.fromArray([path1
+                                        ,path2
+                                        ,path3]))
+                           ,_1: nextSeed};
+                 }();
               }();}
          _U.badCase($moduleName,
-         "between lines 15 and 20");
+         "between lines 15 and 28");
       }();
    });
    _elm.Baobab.values = {_op: _op
@@ -1982,16 +2017,16 @@ Elm.Main.make = function (_elm) {
    $Random = Elm.Random.make(_elm);
    var main = function () {
       var _ = A5($Baobab.baobab,
-      1,
+      10,
       {ctor: "_Tuple2",_0: 0,_1: 0},
       100,
-      0,
-      $Random.initialSeed(5));
+      $Basics.degrees(10),
+      $Random.initialSeed(407));
       var b = function () {
          switch (_.ctor)
          {case "_Tuple2": return _._0;}
          _U.badCase($moduleName,
-         "on line 16, column 20 to 57");
+         "on line 16, column 20 to 71");
       }();
       return A2($Graphics$Collage.collage,
       1000,
