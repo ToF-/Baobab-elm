@@ -10,6 +10,12 @@ type alias Level = Int
 type alias Point = (Float,Float)
 type alias Size  = Float
 
+baselessSquare : Point -> Size -> Path
+baselessSquare (x,y) l = [(x+l,y),(x+l,y+l),(x,y+l),(x,y)]
+
+baselessTriangle : Point -> Size -> Angle -> Path
+baselessTriangle (x,y) l phi = [(x,y),(x + l * cos phi, y + l * sin phi),(x+l,y)]
+
 baobab : Level -> Point -> Size -> Angle -> Seed -> (List Path, Seed)
 baobab level (x,y) size alpha seed =
     case level of 
@@ -25,7 +31,7 @@ baobab level (x,y) size alpha seed =
                 (pathRight,nextSeed) = baobab (level-1) third (size * sin phi) (phi-pi/2.0) newNewSeed
                 path3 = List.concat <| pathRight
 
-            in (List.map (rotate origin alpha) [path1,path2,path3],nextSeed)
+            in (List.map (rotate origin alpha) [path1,path3],nextSeed)
 
 thirdPoint : (Float,Float) -> Float -> Float -> (Float,Float)
 thirdPoint (x,y) h alpha = 

@@ -3,29 +3,19 @@ import ElmTest.Assertion (..)
 import ElmTest.Runner.Element (..)
 import List
 import Random (..)
-import Baobab (..)
+import Baobab as B
 
-roundCoord : (Float, Float) -> (Int,Int)
-roundCoord (x,y) = (round x, round y)
+
+assertEqualPaths expected actual = 
+    let roundCoords (x,y) = (round x*10000, round y*10000)
+    in assertEqual (List.map roundCoords expected)  (List.map roundCoords actual)
 
 tests = suite "Baobab function" 
-        [suite "thirdPoint"
-            [test "should calculate the third point coordinates for 45°" 
-                 (assertEqual (5,5) (roundCoord (thirdPoint (0,0) 10 (degrees 45))))
-            ,test "should calculate the third point coordinates for 60°" 
-                 (assertEqual (3,4) (roundCoord (thirdPoint (0,0) 10 (degrees 60))))
-            ]
-        ,suite "squareAndTriangle"
-            [test "should calculate the path for a square and a triangle"
-                (assertEqual [(0,0),(10,0),(10,10),(5,15),(0,10),(10,10),(0,10),(0,0)]
-                  (List.map roundCoord (squareAndTriangle (0,0) 10 (degrees 45))))
-            ]
-        ,suite "tranformations:" 
-            [test "rotate should rotate a path around a point" 
-                (assertEqual [(1,2),(1,1)] (List.map roundCoord (rotate (0,0) (degrees 45) [(2,1),(1,0)])))
-            ,test "translate should translate a path to a point" 
-                (assertEqual [(4,4),(3,3)] (List.map roundCoord (translate (2,3) [(2,1),(1,0)])))]
+    [test "given a point and a size, baseless square yields a path"
+     <| assertEqual [(10,0),(10,10),(0,10),(0,0)] <| B.baselessSquare (0,0) 10
 
-        ]
+    ,test "given a point, a size, and an angle, baseless triangle yields a path"
+     <| assertEqualPaths [(0,0),(sqrt 2, sqrt 2),(2,0)] <| B.baselessTriangle (0,0) 2 (degrees 45)
+    ]
 
 main = runDisplay tests
